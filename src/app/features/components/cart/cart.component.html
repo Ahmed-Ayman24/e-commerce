@@ -1,0 +1,67 @@
+<section
+  class="bg-gray-200 text-gray-700 font-semibold rounded border shadow p-6 w-[95%] mx-auto"
+>
+  <h1 class="text-2xl text-gray-800">Shop Cart:</h1>
+  <div class="flex justify-between items-center">
+    <span class="text-main text-sm"
+      >Total Cart Price: {{ cartDetails.totalCartPrice | currency : "GBP" }}
+    </span>
+    @if (cartDetails.totalCartPrice != 0) {
+    <button
+      (click)="clearItems()"
+      class="bg-red-600 text-white border rounded text-xs px-8 py-2 hover:bg-red-800 transition-all duration-300"
+    >
+      Clear Cart
+    </button>
+    }
+  </div>
+
+  @if (cartDetails.totalCartPrice == 0) {
+  <p class="text-main text-2xl text-center">Your cart is empty!</p>
+  } @else { @for (prod of cartDetails.products; track prod.product.id) {
+  <div
+    class="grid md:grid-cols-[10%_minmax(0,1fr)] gap-4 border border-b-gray-400 py-5"
+  >
+    <div>
+      <img
+        [src]="prod.product.imageCover"
+        class="w-full h-[150px] object-contain"
+        [alt]="prod.product.title"
+      />
+    </div>
+    <div class="flex justify-between items-center">
+      <div>
+        <h3>{{ prod.product.title }}</h3>
+        <h4 class="text-main py-2">
+          Price: {{ prod.price | currency : "GBP" }}
+        </h4>
+        <button
+          (click)="removeItem(prod.product.id)"
+          class="hover:text-red-600 transition-all duration-300"
+        >
+          <i class="fas fa-trash-can text-main"></i> Remove
+        </button>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          (click)="updateCount(prod.product.id, prod.count + 1)"
+          class="text-main text-3xl hover:text-green-900 transition-all duration-300"
+        >
+          <i class="fa-regular fa-square-plus"></i>
+        </button>
+        <span>{{ prod.count }}</span>
+        @if (prod.count > 1) {
+        <button
+          (click)="updateCount(prod.product.id, prod.count - 1)"
+          class="text-main text-3xl hover:text-green-900 transition-all duration-300"
+        >
+          <i class="fa-regular fa-square-minus"></i>
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  }
+  <button class="btn-main ml-auto mt-4" [routerLink]="['/checkout', cartDetails._id]">Checkout</button>
+  }
+</section>

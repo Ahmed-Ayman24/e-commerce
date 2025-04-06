@@ -1,0 +1,82 @@
+<input
+  [(ngModel)]="searchProducts"
+  type="text"
+  placeholder="Search Products"
+  class="bg-gray-50 border placeholder:text-gray-400 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 my-4 mx-auto p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+/>
+<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  @for (prod of products() | searchWords: searchProducts; track prod._id) {
+  <div
+    class="product border border-green-400/50 rounded-md overflow-hidden shadow relative"
+  >
+    <div>
+      <div
+        class="card-img cursor-pointer"
+        [routerLink]="['/', 'products', 'product-details', prod._id]"
+      >
+        <img
+          [src]="prod.imageCover"
+          class="w-full h-[250px] object-contain"
+          [alt]="prod.title"
+        />
+      </div>
+      <div class="card-body px-2 py-4 font-bold">
+        <h4 class="text-main text-xs">{{ prod.category.name }}</h4>
+        <div class="flex justify-between items-center">
+          <h3>{{ prod.title.split(" ", 2).join(" ") }}</h3>
+          <button (click)="addToWishlist(prod._id)">
+            @if (!isInWishlist(prod._id)) {
+            <svg
+              class="w-10 h-10 text-main"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+              />
+            </svg>
+            } @else if (isInWishlist(prod._id)) {
+            <svg
+              class="w-10 h-10 text-main"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"
+              />
+            </svg>
+            }
+          </button>
+        </div>
+        <div class="flex justify-between items-center">
+          <span>{{ prod.price | currency : "GBP" }}</span>
+          <div class="flex items-center">
+            <i class="fas fa-star rating-color"></i>
+            <span class="text-gray-500">{{ prod.ratingsAverage }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button
+        (click)="addToCart(prod._id)"
+        class="btn bg-main text-white py-2 px-10 border rounded w-full mx-auto block"
+      >
+        Add To Cart
+      </button>
+    </div>
+  </div>
+  }
+</div>

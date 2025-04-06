@@ -1,0 +1,58 @@
+<section>
+  <div class="grid md:grid-cols-[70%_minmax(0,1fr)]">
+    <div>
+      <owl-carousel-o [options]="customMainSlider">
+        <ng-template carouselSlide>
+          <img
+            src="/images/slider-image-3.jpeg"
+            class="w-full h-[500px] object-fill"
+            alt=""
+          />
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="/images/slider-image-2.jpeg"
+            class="w-full h-[500px] object-fill"
+            alt=""
+          />
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="/images/slider-image-1.jpeg"
+            class="w-full h-[500px] object-fill"
+            alt=""
+          />
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+    <div>
+      <img
+        src="/images/slider-image-2.jpeg"
+        class="w-full h-[250px] object-fill"
+        alt=""
+      />
+      <img
+        src="/images/slider-image-1.jpeg"
+        class="w-full h-[250px] object-fill"
+        alt=""
+      />
+    </div>
+  </div>
+</section>
+<section class="py-8">
+  <h2 class="text-4xl py-2">Popular Categories</h2>
+  <owl-carousel-o [options]="customOptions">
+    @for (cat of categories(); track cat._id) {
+    <ng-template carouselSlide>
+      <div>
+        <img [src]="cat.image" class="w-full h-[250px]" alt="" />
+        <h3 class="text-main">{{ cat.name }}</h3>
+      </div>
+    </ng-template>
+    }
+  </owl-carousel-o>
+</section>
+<section>
+<h2 class="text-4xl py-2">Popular Products</h2>
+<app-products></app-products>
+</section>

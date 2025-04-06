@@ -1,0 +1,13 @@
+<router-outlet></router-outlet>
+
+<ngx-spinner
+  bdColor="rgba(245, 245, 245, 0.9)"
+  color="#333"
+  size="medium"
+  [fullScreen]="true"
+  [template]="'<div class=\'flex flex-col items-center space-y-2\'>
+                 <img class=\'w-[500px]\' src=\'/images/freshcart-logo.svg\' />
+                 <span class=\'text-gray-700 text-lg font-semibold\'>Loading...</span>
+               </div>'"
+>
+</ngx-spinner>

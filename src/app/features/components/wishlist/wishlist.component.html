@@ -1,0 +1,42 @@
+<section
+  class="bg-gray-200 text-gray-700 font-semibold rounded border shadow p-6 w-[95%] mx-auto"
+>
+  <h1 class="text-2xl text-gray-800">My wishlist:</h1>
+
+  @if (wishlistData.count === 0) {
+  <p class="text-main text-2xl text-center">Your wishlist is empty!</p>
+  } @else { @for (prod of wishlistData.data; track $index) {
+  <div class="flex justify-between items-center border border-b-gray-400 py-5">
+    <div class="flex justify-center items-center gap-4">
+      <div
+        [routerLink]="['/products/product-details', prod._id]"
+        class="cursor-pointer"
+      >
+        <img
+          [src]="prod.imageCover"
+          class="w-full h-[150px] object-contain"
+          [alt]="prod.slug"
+        />
+      </div>
+      <div>
+        <h4 class="text-main py-1">{{ prod.category.name }}</h4>
+        <h3
+          [routerLink]="['/products/product-details', prod._id]"
+          class="text-2xl font-bold cursor-pointer"
+        >
+          {{ prod.title }}
+        </h3>
+        <h4 class="text-main py-1">
+          Price: {{ prod.price | currency : "GBP" }}
+        </h4>
+        <button
+          (click)="removeProductFromWishlist(prod._id)"
+          class="hover:text-red-600 transition-all duration-300"
+        >
+          <i class="fas fa-trash-can text-main"></i> Remove
+        </button>
+      </div>
+    </div>
+  </div>
+  } }
+</section>
